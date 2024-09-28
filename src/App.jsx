@@ -35,7 +35,7 @@ function App() {
     do {
       randomIndex = Math.floor(Math.random() * chapters.length);
     } while (chapters[randomIndex] == chapterQuery);
-    setChapterQuery(chapters[randomIndex]);
+    if (chapters.length > 0) setChapterQuery(chapters[randomIndex]);
   }
 
   function changeNation() {
@@ -43,7 +43,7 @@ function App() {
     do {
       randomIndex = Math.floor(Math.random() * nations.length);
     } while (nations[randomIndex] == nationQuery);
-    setNationQuery(nations[randomIndex]);
+    if (nations.length > 0) setNationQuery(nations[randomIndex]);
   }
   
   function changeLiving() {
@@ -57,7 +57,7 @@ function App() {
   }
 
   // Fetch the characters that meet the queries
-  function getCharacters() {
+  function fetchCharactersQueries() {
     fetch(`https://stand-by-me.herokuapp.com/api/v1/characters/query/query?
       chapter=${chapterQuery}&nationality=${nationQuery}&living=${livingQuery}`)
       .then(response => response.json())
@@ -79,7 +79,7 @@ function App() {
         changeLiving={changeLiving}
       />
       <CardContainer characters={characters}/>
-      <button onClick={getCharacters}>Generate</button>
+      <button onClick={fetchCharactersQueries}>Generate</button>
     </div>
   )
 }
